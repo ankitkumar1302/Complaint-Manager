@@ -2,39 +2,116 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>View Open Complaints</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+    <style>
+        /* Custom styles for dark mode */
+        .dark-mode {
+            background-color: #1A202C;
+            color: #CBD5E0;
+        }
+
+        .dark-mode .bg-gray-800 {
+            background-color: #2D3748;
+        }
+
+        .blur-bg {
+            backdrop-filter: blur(10px);
+            background-color: rgba(31, 41, 55, 0.8); /* Tailwind's gray-800 with 80% opacity */
+        }
+
+        .navbar img {
+            max-height: 40px;
+            margin-right: 10px;
+            height: auto;
+            width: auto;
+        }
+
+        .navbar .navbar-title {
+            font-size: 1.375rem; /* 22px */
+            font-weight: bold;
+        }
+
+        .navbar a.active {
+            border-bottom: 2px solid #66D9EF;
+        }
+
+        .icon {
+            font-size: 1.5rem;
+        }
+
+        .btn-orange {
+            background-color: #FFA500; /* Orange background */
+            color: white;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin-bottom: 8px; /* Added margin-bottom for spacing */
+        }
+
+        .btn-orange:hover {
+            background-color: #FF8C00; /* Darker orange on hover */
+        }
+    </style>
+    <script>
+        function toggleDarkMode() {
+            try {
+                const body = document.body;
+                body.classList.toggle('dark-mode');
+            } catch (error) {
+                console.error('An error occurred while toggling dark mode:', error);
+            }
+        }
+    </script>
 </head>
-<body>
-<nav>
-    <ul>
-        <li><a th:href="@{/dashboard}">Dashboard</a></li>
-        <li><a th:href="@{/login}">Login</a></li>
-        <li><a th:href="@{/complaintHistory(userId=${userId})}">Complaint History</a></li>
-    </ul>
+<body class="h-screen bg-gray-900 text-gray-200">
+<nav class="navbar fixed top-0 left-0 w-full h-16 bg-transparent z-10 shadow-md">
+    <div class="container mx-auto p-4 flex justify-between items-center">
+        <div class="flex items-center">
+            <img th:src="@{/image/logo-removebg.png}" alt="Logo">
+            <p class="text-gray-200 navbar-title">Dashboard</p>
+        </div>
+        <div class="flex space-x-4">
+            <a th:href="@{/dashboard}" th:classappend="${page == 'dashboard'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">Dashboard</a>
+            <a th:href="@{/viewComplaints}" th:classappend="${page == 'viewComplaints'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">View Complaints</a>
+            <a th:href="@{/complaintHistory}" th:classappend="${page == 'complaintHistory'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">Complaint History</a>
+        </div>
+        <div class="flex space-x-4 items-center">
+            <button onclick="toggleDarkMode()" class="text-white font-bold py-2 px-6 rounded transition duration-300 ease-in-out icon">
+                🌓
+            </button>
+            <a th:href="@{/logout}" class="btn-orange">
+                Logout
+            </a>
+        </div>
+    </div>
 </nav>
-<h1>Open Complaints</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Complaint Type</th>
-        <th>Description</th>
-        <th>Registration Date & Time</th>
-        <th>Status</th>
-<!--        <th>User ID</th>-->
-        <th>Image</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="complaint : ${complaints}">
-        <td th:text="${complaint.type}"></td>
-        <td th:text="${complaint.description}"></td>
-        <td th:text="${complaint.registrationDateTime}"></td>
-        <td th:text="${complaint.status}"></td>
-        <td>
-            <img th:src="@{'/images/' + ${complaint.imageUrl}}" alt="Complaint Image" width="100">
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div class="container mx-auto p-4 pt-20">
+    <div class="max-w-7xl mx-auto mt-8 p-6 bg-gray-800 text-white shadow-md rounded">
+        <h1 class="text-2xl font-bold mb-6">Open Complaints</h1>
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-700">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Complaint Type</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Description</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Registration Date & Time</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Image</th>
+            </tr>
+            </thead>
+            <tbody class="bg-gray-800 divide-y divide-gray-700">
+            <tr th:each="complaint : ${complaints}">
+                <td class="px-6 py-4 whitespace-nowrap" th:text="${complaint.type}"></td>
+                <td class="px-6 py-4 whitespace-nowrap" th:text="${complaint.description}"></td>
+                <td class="px-6 py-4 whitespace-nowrap" th:text="${complaint.registrationDateTime}"></td>
+                <td class="px-6 py-4 whitespace-nowrap" th:text="${complaint.status}"></td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <img th:src="@{'/images/' + ${complaint.imageUrl}}" alt="Complaint Image" class="w-24 h-auto">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>
