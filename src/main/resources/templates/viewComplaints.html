@@ -20,7 +20,7 @@
         <th>Description</th>
         <th>Registration Date & Time</th>
         <th>Status</th>
-        <th>User ID</th>
+<!--        <th>User ID</th>-->
         <th>Image</th>
     </tr>
     </thead>
@@ -30,7 +30,6 @@
         <td th:text="${complaint.description}"></td>
         <td th:text="${complaint.registrationDateTime}"></td>
         <td th:text="${complaint.status}"></td>
-        <td th:text="${complaint.userId}"></td>
         <td>
             <img th:src="@{'/images/' + ${complaint.imageUrl}}" alt="Complaint Image" width="100">
         </td>

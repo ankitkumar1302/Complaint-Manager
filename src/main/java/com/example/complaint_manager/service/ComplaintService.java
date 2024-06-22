@@ -23,7 +23,7 @@ public class ComplaintService {
         return complaintRepository.findByStatus("open");
     }
 
-    public List<Complaint> getComplaintHistory(String userId) {
-        return complaintRepository.findByUserId(userId);
-    }
+//    public List<Complaint> getComplaintHistory(String userId) {
+//        return complaintRepository.findByUserId(userId);
+//    }
 }

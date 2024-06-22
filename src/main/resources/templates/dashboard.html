@@ -2,35 +2,171 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+    <style>
+        /* Custom styles for dark mode */
+        .dark-mode {
+            background-color: #1A202C;
+            color: #CBD5E0;
+        }
+
+        .dark-mode .bg-gray-800 {
+            background-color: #2D3748;
+        }
+
+        .blur-bg {
+            backdrop-filter: blur(10px);
+            background-color: rgba(31, 41, 55, 0.8); /* Tailwind's gray-800 with 80% opacity */
+        }
+
+        .navbar img {
+            max-height: 40px;
+            margin-right: 10px;
+            height: auto;
+            width: auto;
+        }
+
+        .navbar .navbar-title {
+            font-size: 1.375rem; /* 22px */
+            font-weight: bold;
+        }
+
+        .navbar a.active {
+            border-bottom: 2px solid #66D9EF;
+        }
+
+        /* Updated styles for form fields */
+        .mb-6 label {
+            color: white; /* Force white color for labels */
+        }
+
+        .mb-6 input[type="file"], .mb-6 textarea, .mb-6 select {
+            border: 1px solid #66D9EF; /* Soft blue border */
+            background-color: #F7F7F7; /* Light gray background */
+            color: #333; /* Dark gray text color */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        }
+
+        .mb-6 input[type="file"]:focus, .mb-6 textarea:focus, .mb-6 select:focus {
+            border-color: #66D9EF; /* Soft blue border on focus */
+            box-shadow: 0 0 10px rgba(102, 217, 239, 0.5); /* Soft blue glow */
+        }
+
+        .mb-6 input[type="file"]::file-selector-button {
+            color: black; /* File input button text color */
+        }
+
+        /* Update the select dropdown to include an icon */
+        .mb-6 select {
+            appearance: none; /* Remove default dropdown arrow */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3csvg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"%3e%3cpath fill="none" stroke="%23666" stroke-width="2" d="M1 7l9 9 9-9"/%3e%3c/svg%3e');
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem; /* Ensure text doesn't overlap the icon */
+        }
+
+        /* Add padding to the description textarea for better UX */
+        .mb-6 textarea {
+            padding: 1rem; /* Add padding */
+        }
+
+        .icon {
+            font-size: 1.5rem;
+        }
+
+        .btn-orange {
+            background-color: #FFA500; /* Orange background */
+            color: white;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            margin-bottom: 8px; /* Added margin-bottom for spacing */
+        }
+
+        .btn-orange:hover {
+            background-color: #FF8C00; /* Darker orange on hover */
+        }
+    </style>
+    <script>
+        function toggleDarkMode() {
+            try {
+                const body = document.body;
+                body.classList.toggle('dark-mode');
+            } catch (error) {
+                console.error('An error occurred while toggling dark mode:', error);
+            }
+        }
+
+        function handleSubmit(event) {
+            try {
+                const type = document.getElementById('type').value;
+                const description = document.getElementById('description').value;
+                if (!type) {
+                    throw new Error('Complaint type is required.');
+                }
+                if (!description) {
+                    throw new Error('Description is required.');
+                }
+                console.log('Form submitted successfully');
+            } catch (error) {
+                event.preventDefault();
+                console.error('An error occurred while submitting the form:', error);
+                alert(error.message);
+            }
+        }
+    </script>
 </head>
-<body>
-<nav>
-    <ul>
-        <li><a th:href="@{/login}">Login</a></li>
-        <li><a th:href="@{/viewComplaints}">View Open Complaints</a></li>
-        <li><a th:href="@{/complaintHistory}">Complaint History</a></li>
-    </ul>
+<body class="h-screen" style="background-color: #0F172A;">
+<nav class="navbar fixed top-0 left-0 w-full h-16 bg-transparent z-10 shadow-md">
+    <div class="container mx-auto p-4 flex justify-between items-center">
+        <div class="flex items-center">
+            <img th:src="@{/image/logo-removebg.png}" alt="Logo">
+            <p class="text-gray-200 navbar-title">Dashboard</p>
+        </div>
+        <div class="flex space-x-4">
+            <a th:href="@{/viewComplaints}" th:classappend="${page == 'viewComplaints'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">View Complaints</a>
+            <a th:href="@{/complaintHistory}" th:classappend="${page == 'complaintHistory'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">Complaint History</a>
+        </div>
+        <div class="flex space-x-4 items-center">
+            <button onclick="toggleDarkMode()" class="text-white font-bold py-2 px-6 rounded transition duration-300 ease-in-out icon">
+                🌓
+            </button>
+            <a th:href="@{/logout}" class="btn-orange">
+                Logout
+            </a>
+        </div>
+    </div>
 </nav>
-<h1>Submit a Complaint</h1>
-<form th:action="@{/submitComplaint}" method="post" enctype="multipart/form-data">
-    <label for="type">Complaint Type:</label>
-    <select name="type" id="type">
-        <option value="ISAP">ISAP</option>
-        <option value="Doordrishti">Doordrishti</option>
-    </select>
-    <br>
-    <label for="description">Description:</label>
-    <textarea id="description" name="description"></textarea>
-    <br>
-    <label for="image">Upload Image:</label>
-    <input type="file" id="image" name="image">
-    <br>
-    <label for="userId">User ID:</label>
-    <input type="text" id="userId" name="userId">
-    <br>
-    <input type="submit" value="Submit">
-</form>
-<p th:text="${message}"></p>
+<div class="container mx-auto p-4 pt-20">
+    <div class="max-w-md mx-auto mt-8 p-6 blur-bg text-white shadow-md rounded">
+        <h1 class="text-2xl font-bold mb-6">Submit a Complaint</h1>
+        <form th:action="@{/submitComplaint}" method="post" enctype="multipart/form-data" onsubmit="handleSubmit(event)">
+            <div class="mb-6">
+                <label for="type" class="block text-sm font-bold mb-2">Complaint Type:</label>
+                <select name="type" id="type" class="shadow appearance-none border rounded w-full py-3 px-4 leading-tight focus:outline-none focus:shadow-outline" style="background-color: #F7F7F7; color: #333;" required>
+                    <option value="" style="color: black;">Select Type</option>
+                    <option value="ISAP" style="color: black;">ISAP</option>
+                    <option value="Doordrishti" style="color: black;">Doordrishti</option>
+                </select>
+            </div>
+            <div class="mb-6">
+                <label for="description" class="block text-sm font-bold mb-2">Description:</label>
+                <textarea id="description" name="description" class="shadow appearance-none border rounded w-full py-5 px-4 leading-tight focus:outline-none focus:shadow-outline" style="background-color: #F7F7F7; color: #333; height: 150px" required></textarea>
+            </div>
+            <div class="mb-6">
+                <label for="image" class="block text-sm font-bold mb-2">Upload Image:</label>
+                <input type="file" id="image" name="image" class="shadow appearance-none border rounded w-full py-3 px-4 leading-tight focus:outline-none focus:shadow-outline" style="background-color: #F7F7F7; color: black;">
+            </div>
+            <div class="flex items-center justify-center mb-8">
+                <input type="submit" value="Submit" class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+            </div>
+            <div th:fragment="success-message">
+                <p th:text="${successMessage}">Your request has been submitted successfully!</p>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>

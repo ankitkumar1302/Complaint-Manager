@@ -29,8 +29,6 @@ public class Complaint {
     @Column(nullable = false)
     private String status;
 
-    @Column(nullable = false)
-    private String userId;
 
     // Getters and Setters
 }

@@ -1,0 +1,24 @@
+{
+  "name": "complaint-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ankitkumar1302/Complaint-Manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ankitkumar1302/Complaint-Manager/issues"
+  },
+  "homepage": "https://github.com/ankitkumar1302/Complaint-Manager#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.4"
+  }
+}
