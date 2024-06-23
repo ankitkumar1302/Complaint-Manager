@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>View Open Complaints</title>
+    <title>View Complaints</title>
     <link rel="stylesheet" th:href="@{/css/output.css}">
     <style>
         /* Custom styles for dark mode */
@@ -52,6 +52,56 @@
         .btn-orange:hover {
             background-color: #FF8C00; /* Darker orange on hover */
         }
+
+        /* Style for full-page table */
+        table {
+            width: 100%;
+            table-layout: auto;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: 1px solid #374151; /* Tailwind's gray-700 */
+        }
+
+        th {
+            background-color: rgba(45, 55, 72, 0.8); /* Slightly transparent gray-700 */
+            color: #CBD5E0; /* Light gray color */
+        }
+
+        td {
+            background-color: rgba(31, 41, 55, 0.8); /* Slightly transparent gray-800 */
+            color: #E5E7EB; /* Light gray color */
+        }
+
+        .container {
+            background-color: #0F172A; /* Main background color */
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .navbar-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+
+        .navbar-links a {
+            margin: 0 10px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 0 auto;
+        }
     </style>
     <script>
         function toggleDarkMode() {
@@ -64,17 +114,18 @@
         }
     </script>
 </head>
-<body class="h-screen bg-gray-900 text-gray-200">
+<body class="h-screen" style="background-color: #0F172A;">
 <nav class="navbar fixed top-0 left-0 w-full h-16 bg-transparent z-10 shadow-md">
-    <div class="container mx-auto p-4 flex justify-between items-center">
+    <div class="navbar-container container mx-auto p-4">
         <div class="flex items-center">
             <img th:src="@{/image/logo-removebg.png}" alt="Logo">
-            <p class="text-gray-200 navbar-title">Dashboard</p>
+            <span class="navbar-title text-white">View Complaints</span>
         </div>
-        <div class="flex space-x-4">
+        <div class="navbar-links">
             <a th:href="@{/dashboard}" th:classappend="${page == 'dashboard'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">Dashboard</a>
             <a th:href="@{/viewComplaints}" th:classappend="${page == 'viewComplaints'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">View Complaints</a>
             <a th:href="@{/complaintHistory}" th:classappend="${page == 'complaintHistory'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">Complaint History</a>
+            <a th:href="@{/submitComplaint}" th:classappend="${page == 'submitComplaint'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">Submit Complaint</a>
         </div>
         <div class="flex space-x-4 items-center">
             <button onclick="toggleDarkMode()" class="text-white font-bold py-2 px-6 rounded transition duration-300 ease-in-out icon">
@@ -86,31 +137,34 @@
         </div>
     </div>
 </nav>
-<div class="container mx-auto p-4 pt-20">
-    <div class="max-w-7xl mx-auto mt-8 p-6 bg-gray-800 text-white shadow-md rounded">
+
+<div class="container mx-auto p-4 pt-20 h-screen overflow-auto">
+    <div class="max-w-7xl mx-auto mt-8 p-6 blur-bg text-white shadow-md rounded">
         <h1 class="text-2xl font-bold mb-6">Open Complaints</h1>
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-700">
-            <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Complaint Type</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Description</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Registration Date & Time</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Image</th>
-            </tr>
-            </thead>
-            <tbody class="bg-gray-800 divide-y divide-gray-700">
-            <tr th:each="complaint : ${complaints}">
-                <td class="px-6 py-4 whitespace-nowrap" th:text="${complaint.type}"></td>
-                <td class="px-6 py-4 whitespace-nowrap" th:text="${complaint.description}"></td>
-                <td class="px-6 py-4 whitespace-nowrap" th:text="${complaint.registrationDateTime}"></td>
-                <td class="px-6 py-4 whitespace-nowrap" th:text="${complaint.status}"></td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <img th:src="@{'/images/' + ${complaint.imageUrl}}" alt="Complaint Image" class="w-24 h-auto">
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-700">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Complaint Type</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Description</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Registration Date & Time</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Image</th>
+                </tr>
+                </thead>
+                <tbody class="bg-gray-800 divide-y divide-gray-700">
+                <tr th:each="complaint : ${complaints}">
+                    <td class="px-6 py-4" th:text="${complaint.type}"></td>
+                    <td class="px-6 py-4" th:text="${complaint.description}"></td>
+                    <td class="px-6 py-4" th:text="${complaint.registrationDateTime}"></td>
+                    <td class="px-6 py-4" th:text="${complaint.status}"></td>
+                    <td class="px-6 py-4">
+                        <img th:src="@{'/images/' + ${complaint.imageUrl}}" alt="Complaint Image" class="w-24 h-auto mx-auto block">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>
