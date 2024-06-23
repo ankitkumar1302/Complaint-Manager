@@ -15,8 +15,7 @@ public class DashboardController {
 /*
     TODO: Create the conditions in the login after validation got access to the dashboard.
     TODO: Email Validation
-    TODO: Have to remove teh User ID form the Submit Complaint & from database.
     TODO: Complaint History how to get search for that.
-    TODO: Create a link where user click on that and get the image of the complaint.
+
 
  */
