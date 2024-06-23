@@ -36,7 +36,7 @@ public class ComplainController {
         Complaint complaint = new Complaint();
         complaint.setType(type);
         complaint.setDescription(description);
-        complaint.setStatus("open");
+        complaint.setStatus("Open");
 
         if (!image.isEmpty()) {
             try {
