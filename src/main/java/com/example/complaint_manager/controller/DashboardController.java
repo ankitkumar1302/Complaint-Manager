@@ -16,7 +16,8 @@ public class DashboardController {
     TODO: Handle the registration page.
     TODO: Email Validation
     TODO: Create the conditions in the login after validation got access to the dashboard.
-    TODO: Create the conditions in the login page field emails ends with @iocl.in (Give condition at last)
+    TODO: Create the conditions in the login page field emails ends with @iocl.in (Give condition at last) Change in Design.
+    TODO: Create User like -> Admin, IOCL User, Solution Provider.
     TODO: Complaint History how to get search for that.
     TODO: Have to create a new page for the complaint history.(What wil be the component or thing that help for search it.)
     TODO: Have to create logout button. with functionality.
