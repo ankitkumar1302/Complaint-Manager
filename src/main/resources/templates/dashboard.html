@@ -126,6 +126,7 @@
             <p class="text-gray-200 navbar-title">Dashboard</p>
         </div>
         <div class="flex space-x-4">
+            <a th:href="@{/dashboard}" th:classappend="${page == 'dashboard'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold active">Dashboard</a>
             <a th:href="@{/viewComplaints}" th:classappend="${page == 'viewComplaints'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">View Complaints</a>
             <a th:href="@{/complaintHistory}" th:classappend="${page == 'complaintHistory'} ? 'active' : ''" class="text-gray-200 hover:text-white transition duration-300 font-bold">Complaint History</a>
         </div>

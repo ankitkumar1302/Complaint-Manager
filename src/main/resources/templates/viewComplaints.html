@@ -140,11 +140,9 @@
             <a th:href="@{/dashboard}" th:classappend="${page == 'dashboard'} ? 'active' : ''"
                class="text-gray-200 hover:text-white transition duration-300 font-bold">Dashboard</a>
             <a th:href="@{/viewComplaints}" th:classappend="${page == 'viewComplaints'} ? 'active' : ''"
-               class="text-gray-200 hover:text-white transition duration-300 font-bold">View Complaints</a>
+               class="text-gray-200 hover:text-white transition duration-300 font-bold active">View Complaints</a>
             <a th:href="@{/complaintHistory}" th:classappend="${page == 'complaintHistory'} ? 'active' : ''"
                class="text-gray-200 hover:text-white transition duration-300 font-bold">Complaint History</a>
-            <a th:href="@{/submitComplaint}" th:classappend="${page == 'submitComplaint'} ? 'active' : ''"
-               class="text-gray-200 hover:text-white transition duration-300 font-bold">Submit Complaint</a>
         </div>
         <div class="flex space-x-4 items-center">
             <button onclick="toggleDarkMode()"
@@ -165,23 +163,17 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-700">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Complaint
-                        Type
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                        Description
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                        Registration Date & Time
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Image
-                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Complaint Type</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Description</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Registration Date & Time</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Image</th>
                 </tr>
                 </thead>
                 <tbody class="bg-gray-800 divide-y divide-gray-700">
                 <tr th:each="complaint : ${complaints}">
+                    <td class="px-6 py-4" th:text="${complaint.id}"></td>
                     <td class="px-6 py-4" th:text="${complaint.type}"></td>
                     <td class="px-6 py-4" th:text="${complaint.description}"></td>
                     <td class="px-6 py-4" th:text="${complaint.registrationDateTime}"></td>

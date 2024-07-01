@@ -20,10 +20,10 @@ public class ComplaintService {
     }
 
     public List<Complaint> getOpenComplaints() {
-        return complaintRepository.findByStatus("open");
+        return complaintRepository.findByStatus("Open");
     }
 
-//    public List<Complaint> getComplaintHistory(String userId) {
-//        return complaintRepository.findByUserId(userId);
-//    }
+    public List<Complaint> getComplaintHistory() {
+        return complaintRepository.findByStatus("Closed");
+    }
 }

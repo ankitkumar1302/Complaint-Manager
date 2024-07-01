@@ -67,10 +67,11 @@ public class ComplainController {
         return "viewComplaints"; // Ensure this matches the Thymeleaf template name
     }
 
-//    @GetMapping("/complaintHistory")
-//    public String complaintHistory(@RequestParam("userId") String userId, Model model) {
-//        List<Complaint> complaints = complaintService.getComplaintHistory(userId);
-//        model.addAttribute("complaints", complaints);
-//        return "complaintHistory"; // Ensure this matches the Thymeleaf template name
-//    }
+    @GetMapping("/complaintHistory")
+    public String complaintHistory(Model model) {
+        List<Complaint> complaintHistory = complaintService.getComplaintHistory();
+        model.addAttribute("complaints", complaintHistory);
+        return "complaintHistory";
+
+    }
 }
