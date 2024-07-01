@@ -127,6 +127,44 @@
             max-width: 100%;
             height: auto;
         }
+
+        /* Custom styles for response dialog */
+        .response-dialog {
+            background-color: #2D3748;
+            color: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .response-dialog-header {
+            font-size: 1.25rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .response-dialog-body {
+            margin-top: 16px;
+        }
+        .response-dialog-messages {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+        }
+        .response-dialog-form textarea {
+            width: 100%;
+            height: 80px;
+            border-radius: 4px;
+            padding: 8px;
+        }
+        .response-dialog-form button {
+            background-color: #FFA500;
+            color: white;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body class="h-screen" style="background-color: #0F172A;">
@@ -169,6 +207,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Registration Date & Time</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Image</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Response</th>
                 </tr>
                 </thead>
                 <tbody class="bg-gray-800 divide-y divide-gray-700">
@@ -187,6 +226,9 @@
                                 class="btn-orange">View Image</button>
                         <span th:if="${complaint.imageUrl == null}">No Image</span>
                     </td>
+                    <td class="px-6 py-4">
+                        <button onclick="openResponseDialog(this)" th:data-complaint-id="${complaint.id}" class="btn-orange">Response</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -200,7 +242,6 @@
         <img id="modalImage" src="" alt="Complaint Image">
     </div>
 </div>
-
 <script th:src="@{/js/scripts.js}"></script>
 </body>
 </html>
