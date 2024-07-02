@@ -19,10 +19,11 @@ function openResponseDialog(button) {
     const complaintId = button.getAttribute('data-complaint-id');
     const currentRow = button.closest('tr');
 
-    // Remove any existing response dialog
+    // Toggle visibility of the response dialog
     const existingDialog = document.getElementById(`response-dialog-${complaintId}`);
     if (existingDialog) {
         existingDialog.remove();
+        return;
     }
 
     // Create a new row for the response dialog
